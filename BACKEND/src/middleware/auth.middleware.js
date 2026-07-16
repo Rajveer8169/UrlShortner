@@ -1,16 +1,16 @@
-import { findUserById } from "../dao/user.dao"
+import { findUserById } from "../dao/user.dao.js"
+import { verifyToken } from "../utils/helper.js"
 
-export const authMiddleware = async(req,res,next) => {
+export const authMiddleware = async (req, res, next) => {
     const token = req.cookies.accessToken
     if(!token) return res.status(401).json({message:"Unauthorized"})
-    
-    try{
+    try {
         const decoded = verifyToken(token)
-        const user = findUserById(decoded)
+        const user = await findUserById(decoded)
         if(!user) return res.status(401).json({message:"Unauthorized"})
         req.user = user
         next()
-    }catch (error){
-        return res.status(401).json({message:"Unauthorized"})
+    } catch (error) {
+        return res.status(401).json({message:"Unauthorized",error})
     }
 }
