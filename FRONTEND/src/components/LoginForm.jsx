@@ -1,19 +1,22 @@
 import { useState } from 'react';
 import { loginUser } from '../api/user.api';
-import {useDispatch, useSelector} from "react-redux"
-import { login } from "../store/slice/authSlice.js"
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../store/slice/authSlice.js";
 import { useNavigate } from '@tanstack/react-router';
 
 const LoginForm = ({ state }) => {
+
     const [email, setEmail] = useState('raj@1234gmail.com');
     const [password, setPassword] = useState('12345');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const auth = useSelector((state) => state.auth);
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
 
-    console.log(auth)
+    const auth = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    console.log(auth);
+
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -21,74 +24,192 @@ const LoginForm = ({ state }) => {
 
         try {
             const data = await loginUser(password, email);
-            dispatch(login(data.user))
-            navigate({to:"/dashboard"})
+            dispatch(login(data.user));
+            navigate({to:"/dashboard"});
             setLoading(false);
-            // console.log("signin success")
+
         } catch (err) {
             setLoading(false);
             setError(err.message || 'Login failed. Please check your credentials.');
         }
     };
 
+
     return (
-        <div className="w-full max-w-md mx-auto">
-            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+        <div className="w-full max-w-md mx-auto px-4 sm:px-0">
+
+            <div 
+              className="
+                bg-white 
+                shadow-md 
+                rounded-md
+                px-5 py-5
+                sm:px-8
+                sm:pt-6
+                sm:pb-8
+                mb-4
+              "
+            >
+
+                <h2 
+                  className="
+                    text-xl
+                    sm:text-2xl
+                    font-bold
+                    text-center
+                    mb-6
+                  "
+                >
+                    Login
+                </h2>
+
 
                 {error && (
-                    <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+                    <div className="
+                      mb-4
+                      p-3
+                      text-sm
+                      bg-red-100
+                      text-red-700
+                      rounded-md
+                    ">
                         {error}
                     </div>
                 )}
 
+
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+
+                    <label 
+                      className="
+                        block
+                        text-gray-700
+                        text-sm
+                        font-bold
+                        mb-2
+                      "
+                      htmlFor="email"
+                    >
                         Email
                     </label>
+
                     <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="
+                          shadow
+                          appearance-none
+                          border
+                          rounded
+                          w-full
+                          py-2
+                          px-3
+                          text-sm
+                          sm:text-base
+                          text-gray-700
+                          leading-tight
+                          focus:outline-none
+                          focus:ring-2
+                          focus:ring-blue-500
+                        "
                         id="email"
                         type="email"
                         placeholder="Email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
+                        onChange={(e)=>setEmail(e.target.value)}
                     />
+
                 </div>
 
+
                 <div className="mb-6">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+
+                    <label 
+                      className="
+                        block
+                        text-gray-700
+                        text-sm
+                        font-bold
+                        mb-2
+                      "
+                      htmlFor="password"
+                    >
                         Password
                     </label>
+
                     <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="
+                          shadow
+                          appearance-none
+                          border
+                          rounded
+                          w-full
+                          py-2
+                          px-3
+                          text-sm
+                          sm:text-base
+                          text-gray-700
+                          leading-tight
+                          focus:outline-none
+                          focus:ring-2
+                          focus:ring-blue-500
+                        "
                         id="password"
                         type="password"
                         placeholder="******************"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
+                        onChange={(e)=>setPassword(e.target.value)}
                     />
+
                 </div>
 
-                <div className="flex items-center justify-between">
-                    <button
-                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        type="submit"
-                        onClick={handleSubmit}
-                        disabled={loading}
-                    >
-                        {loading ? 'Signing in...' : 'Sign In'}
-                    </button>
-                </div>
+
+                <button
+                    className={`
+                      bg-blue-500
+                      hover:bg-blue-700
+                      text-white
+                      font-bold
+                      py-2
+                      px-4
+                      rounded
+                      w-full
+                      text-sm
+                      sm:text-base
+                      ${loading ? 'opacity-50 cursor-not-allowed' : ''}
+                    `}
+                    onClick={handleSubmit}
+                    disabled={loading}
+                >
+                    {loading ? 'Signing in...' : 'Sign In'}
+                </button>
+
+
 
                 <div className="text-center mt-4">
-                    <p className="cursor-pointer text-sm text-gray-600">
-                        Don't have an account? <span onClick={() => state(false)} className="text-blue-500 hover:text-blue-700">Register</span>
+
+                    <p className="
+                      cursor-pointer
+                      text-xs
+                      sm:text-sm
+                      text-gray-600
+                    ">
+                        Don't have an account?{" "}
+
+                        <span 
+                          onClick={()=>state(false)}
+                          className="
+                            text-blue-500
+                            hover:text-blue-700
+                          "
+                        >
+                            Register
+                        </span>
+
                     </p>
+
                 </div>
+
             </div>
+
         </div>
     );
 };

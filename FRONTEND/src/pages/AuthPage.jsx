@@ -7,8 +7,23 @@ const AuthPage = () => {
     const [login, setLogin] = useState(true)
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 shadow-5xl">
-            {login ? <LoginForm state={setLogin} /> : <RegisterForm state={setLogin} />}
+        <div 
+            className="
+                min-h-screen
+                bg-gray-100
+                flex
+                flex-col
+                items-center
+                justify-center
+                px-4
+                py-6
+                sm:py-10
+            "
+        >
+            {login 
+                ? <LoginForm state={setLogin} /> 
+                : <RegisterForm state={setLogin} />
+            }
         </div>
     )
 }

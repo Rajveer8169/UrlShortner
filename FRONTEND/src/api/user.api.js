@@ -19,3 +19,8 @@ export const getCurrentUser = async () => {
     const {data} = await axiosinstance.get("/api/auth/me")
     return data
 }
+
+export const getAllUserUrls = async() => {
+    const {data} = await axiosinstance.post("/api/user/urls")
+    return data
+}
